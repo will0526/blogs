@@ -1,0 +1,66 @@
+ReactNative 在 Debug 的情况下，其实还是很贴心的，如果出现崩溃的 Bug，会直接出红屏，提示你崩溃的栈的具体信息，这些内容可以帮助你快速的定位问题。
+而假如现在同样的代码，使用 Release 模式的话，则会直接崩溃了。来看看崩溃的 Log 输出。
+![image.png](https://upload-images.jianshu.io/upload_images/2728934-0c57b66aba017848.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+那么接下来来看看如何定位到这个崩溃的真实代码，value@304:1133 这里，就是线索。
+ react-native 命令，还有一个可配置的参数 —sourcemap-output，它就是我们需要的。
+react-native bundle 
+--platform android 
+--dev false 
+--entry-file index.js 
+--bundle-output android/app/src/main/assets/index.android.bundle 
+--assets-dest android/app/src/main/res/ 
+--sourcemap-output android-release.bundle.map
+
+注意这段命令，需要在 ReactNative 目录的根目录下执行，否者会提示你找不到 node_module 。执行完成，就可以在 ReactNative 项目目录下，看到输出的 android-release.bundle.map 文件了。
+
+解析这个 source-map ，NodeJs 为我们提供了一个专门的库来解析，这里不多解释，直接上代码。
+var sourceMap = require('source-map');
+var fs = require('fs');
+
+fs.readFile('../android-release.bundle.map', 'utf8', function (err, data) {
+    var smc = new sourceMap.SourceMapConsumer(data);
+
+    console.log(smc.originalPositionFor({
+        line: 304,
+        column: 1133
+    }));
+});
+
+
+注意看这里指定的 304 行 1133 列，我们运行一下，看看输出。
+
+![image.png](https://upload-images.jianshu.io/upload_images/2728934-edaaf7113f1db055.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+到此，我们算是完成了 ReactNative App，崩溃分析的一个完整的链路逻辑，我们只需要自己写个脚本工具，就可以帮我们精准定位了。
+
+前面有点长，这里总结一下本小结的内容。
+
+ReactNative 不同的编译模式，使用的 JS 来源不同。Debug 模式来自 Packager Server，而 Release 模式，来自 Apk 的 assets 目录。
+Debug 模式下的崩溃，会触发红屏，而 Release 模式下的崩溃，会直接导致 App 崩溃。
+Debug 模式，之所以可以显示崩溃栈的基本信息，是因为编译的 JS 文件中，包含了对应的源文件和代码行号。而这些在 Release 模式下的 JS 是没有的。
+Release 模式的崩溃栈是被混淆后的，可以通过崩溃栈显示的行号和列号，来定位代码，但是无法定位具体源文件。
+通过 react-native 命名，增加 --sourcemap-output参数，指定输出需要的混淆 Mapping 文件，它其内包含了混淆的信息。
+解读 ReactNative Mapping 文件，可以使用 source-map 这个 NodeJs 库来进行解析，可以精准定位到行号和源文件名。
+
+
+另外，RN 项目很容易崩溃
+经常使用发行包进行测试的开发者们可能会发现，在发行版本中，如果出现了脚本错误，还是会直接闪退。我们可能会希望捕获这种错误，给予用户合理的提示，并采集错误详情帮助后续版本改进。这时候可以使用如下的代码：
+
+require('ErrorUtils').setGlobalHandler(function(err) {
+  // 做你自己的任何处理
+});
+
+
+实验代码如下：
+
+require('react-native')
+require('ErrorUtils').setGlobalHandler(function (err) {
+  console.log('Just ignore');
+});
+setTimeout(()=>{
+  throw new Error(‘Ouch');
+}, 10000);
+
+require('./src/app'); // 正常启动app
+
