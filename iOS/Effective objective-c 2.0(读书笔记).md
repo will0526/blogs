@@ -1,6 +1,6 @@
-#Effective objective-c 2.0(读书笔记)
+# Effective objective-c 2.0(读书笔记)
 
-##1
+## 1
 
 
 OC使用的是消息结构，而非函数调用。
@@ -11,14 +11,14 @@ OC使用的是消息结构，而非函数调用。
 OC 是 C 的超集
 
 
-##2
+## 2
 
 
 @class 向前声明，避免循环引用。
 
 
 
-##3多用字面量语法
+## 3多用字面量语法
 
 
 1，尽量使用字面量语法来创建字符串，数值，数组，字典
@@ -40,7 +40,7 @@ OC 是 C 的超集
     NSDictionary *a = @{@"key":@"value",@"key1":@"value1"}
     
 
-##4多用类型常量，少用#define预处理指令
+## 4多用类型常量，少用#define预处理指令
 
 
 static const NSString * kTimeDuration = @"0.3";
@@ -50,7 +50,7 @@ static const NSString * kTimeDuration = @"0.3";
 `#define kTimeDuration  @"0.3"` 
 
 
-##5 用枚举标识状态
+## 5 用枚举标识状态
 
 
 如果把传递给某个方法的选项以表示为枚举类型，而多个选项又可以同时使用。那么将各选项值定义为2的幂，以便通过按位或操作将其组合起来。
@@ -59,7 +59,7 @@ static const NSString * kTimeDuration = @"0.3";
 处理枚举类型时，switch语句中不要实现default分支。
 
 
-##6 属性
+## 6 属性
 
 
     
