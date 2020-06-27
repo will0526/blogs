@@ -1,8 +1,8 @@
-##思路概述：
+## 思路概述：
 
 商户APP跳转到商户小程序，跳转时附带支付参数，小程序内下单做支付。支付完成后，回调商户APP带回支付结果，APP展示支付结果。
 
-##功能要点：
+## 功能要点：
 
 * 1，APP跳转微信小程序(附带参数)
 * 2，小程序获取用户open_id
@@ -10,7 +10,7 @@
 * 4，小程序下单做支付
 * 5，小程序返回APP
 
-##APP跳转微信小程序
+## APP跳转微信小程序
 * [下载微信SDK](https://developers.weixin.qq.com/doc/oplatform/Downloads/iOS_Resource.html)
 * 接入SDK，
 [官方说明](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Launching_a_Mini_Program/iOS_Development_example.html)
@@ -52,7 +52,7 @@ launchMiniProgramReq.miniProgramType = WXMiniProgramTypePreview; //拉起小程�
 }
 ```
 
-##小程序获取用户open_id
+## 小程序获取用户open_id
 
 1,小程序调用接口 [获取登录凭证（code）]([https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html)
 )
@@ -69,7 +69,7 @@ launchMiniProgramReq.miniProgramType = WXMiniProgramTypePreview; //拉起小程�
 这里的options.scene是1069，这个场景id表示从app打开。
 options.query.key1和options.query.key2就是app打开小程序传递的参数。
 2，下单，
-3，发起支付
+3，发起支付      
 调用wx.requestPayment(OBJECT)发起微信支付，见[官方说明](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&index=5)
 
 4，关闭小程序，回到APP
