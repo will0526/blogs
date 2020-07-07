@@ -163,7 +163,7 @@ __block 变量，实质是栈上__block 变量的结构体实例
 
 
 
-#三 Grand Central Dispatch(GCD)
+# 三 Grand Central Dispatch(GCD)
 
 ## 3.1 GCD
 
@@ -185,7 +185,7 @@ dispatch_asyn(queue, ^{
     假设把A B C D四个任务依次加入到一个Concurrent Dispatch Queue中，这个Concurrent Dispatch Queue会创建多个线程，并发执行这四个任务。
 
 
-##3.2 API
+## 3.2 API
 
 ### 创建一个线程（dispatch_queue_create）
 
@@ -587,12 +587,4 @@ dispatch_io_read(pipe_channel, 0, SIZE_MAX, pipe_q, ^(bool done, dispatch_data_t
 
 
 
-##3.3 GCD 实现
-
-#四、ARC、blocks、GCD使用范例
-
-##ARC
-
-##blocks
-
-##GCD
+## 3.3 GCD 实现
