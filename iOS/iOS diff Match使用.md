@@ -1,4 +1,6 @@
-谷歌，diff_match_patch，在 React Native 开发时增量更新使用
+#谷歌，diff_match_patch，
+
+在 React Native 开发时增量更新使用
 
 
 
