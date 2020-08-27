@@ -34,7 +34,6 @@ OC 是 C 的超集
 
     NSArray *a = @[@"1",@"2"]
     
-
 * 字面量字典
 
     NSDictionary *a = @{@"key":@"value",@"key1":@"value1"}

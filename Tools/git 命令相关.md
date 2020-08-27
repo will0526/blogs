@@ -107,54 +107,12 @@ git remote add origin git@github.com:daixu/WebApp.git
 
  |
 | --- | --- |
-| 
-
-git add
-
- | 
-
-添加至暂存区
-
- |
-| 
-
-git add–interactive
-
- | 
-
-交互式添加
-
- |
-| 
-
-git apply
-
- | 
-
-应用补丁
-
- |
-| 
-
-git am
-
- | 
-
-应用邮件格式补丁
-
- |
-| 
-
-git annotate
-
- | 
-
-同义词，等同于 git blame
-
- |
-| 
-
-git archive
+| git add| 添加至暂存区|
+| git add–interactive| 交互式添加|
+| git apply| 应用补丁|
+| git am | 应用邮件格式补丁|
+| git annotate| 同义词，等同于 git blame|
+| git archive
 
  | 
 
