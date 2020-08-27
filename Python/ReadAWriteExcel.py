@@ -4,14 +4,16 @@ import os
 import pandas as pd
 # import DataFrame
 
+# paths = os.listdir("/Users/will/Desktop/归档/test")
+
 
 #打开一个excel文件
-def open_xls(file):
-    if path.endswith(".xlsx"):
-        f = xlrd.open_workbook(file)
-        return f
-    else:
-        return None
+# def open_xls(file):
+#     if path.endswith(".xlsx"):
+#         f = xlrd.open_workbook(file)
+#         return f
+#     else:
+#         return None
 
 
 
@@ -42,30 +44,32 @@ def getshnum(f):
         x+=1
     return x
 
-
-paths = os.listdir("/Users/will/Desktop/归档/test")
-
+#
+paths = os.listdir("/Users/will/Desktop/test1")
+#
 line = 0
+#
+df3 = pd.read_excel("/Users/will/Desktop/城家.xlsx")
 
-df3 = pd.read_excel("/Users/will/Desktop/归档/test.xlsx")
 for fl in paths:
     if fl == ".DS_Store":continue
 
-    path = os.path.join("/Users/will/Desktop/归档/test", fl)
+    path = os.path.join("/Users/will/Desktop/test1", fl)
     print("开始读取。。。。%s"%path)
     data = pd.read_excel(path)  # 这个会直接默认读取到这个Excel的第一个表单
     data2 = data.drop(index=[0], axis=0)
 
-    df3 = df3.append(data,ignore_index=True)
+    df3 = pd.concat([df3,data2],ignore_index=False)
     print("result有多少行呢%s"%len(df3))
     line = line + len(data)
     # df2.to_excel("/Users/will/Desktop/归档/test.xlsx")
 
-df3.to_excel("/Users/will/Desktop/归档/test1.xlsx")
-df3 = pd.read_excel("/Users/will/Desktop/归档/test1.xlsx")
-
-print("总共多少行df%s"%len(df3))
-print("总共多少行%s"%line)
+df3.to_excel("/Users/will/Desktop/test1.xlsx")
+df4 = pd.read_excel("/Users/will/Desktop/test1.xlsx")
+print(df4)
+#
+# print("总共多少行df%s"%len(df3))
+# print("总共多少行%s"%line)
     # return
 #
 #     if f :
@@ -122,7 +126,11 @@ print("总共多少行%s"%line)
 #
 # writebook.save('answer.xlsx')
 
-
-
+#
+# df3 = pd.read_excel("/Users/will/Desktop/test1/test2/城家.csv")
+# df2 = pd.read_excel("/Users/will/Desktop/test1/test2/城家的副本.xlsx")
+# df3 = pd.concat([df3, df2], ignore_index=True)
+#
+# print(df3)
 
 
