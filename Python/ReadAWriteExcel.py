@@ -44,29 +44,86 @@ def getshnum(f):
         x+=1
     return x
 
+#读取各sheet,合并成一个sheet
+
+def combile_sheet():
+
+    import time
+    ticks = time.time()
+    print("当前时间戳为:", ticks)
+    ex = pd.ExcelFile("/Users/will/Desktop/华住各平台全员名单导出.xlsx")
+    sheet_names = ex.sheet_names
+
+    df = None
+    for sheet_name in sheet_names:
+        if df is None:
+            df = pd.read_excel("/Users/will/Desktop/华住各平台全员名单导出.xlsx",sheet_name=sheet_name)
+            df = df.drop(index=[0], axis=0)
+            continue
+        else:
+            temp = pd.read_excel("/Users/will/Desktop/华住各平台全员名单导出.xlsx",sheet_name=sheet_name)
+            temp2 = temp.drop(index=[0], axis=0)
+            print("sheet多少行df%s"%len(temp2))
+            df = df.append(temp2, ignore_index=True)
+
+    df.to_excel("/Users/will/Desktop/result.xlsx")
+    print(df)
+
+
+    print("总共多少行df%s"%len(df))
+    ticks2 = time.time()
+    print("当前时间戳为:", ticks2-ticks)
+
+
+
+def combile_sheet2():
+
+    file_path = "/Users/will/Desktop/result_test.xlsx"
+    nan_excle = pd.DataFrame()
+
+    nan_excle.to_excel(file_path)
+    # 打开excel
+    writer = pd.ExcelWriter(file_path)
+
+    import time
+    ticks = time.time()
+    ex = pd.ExcelFile("/Users/will/Desktop/华住各平台全员名单导出.xlsx")
+    sheet_names = ex.sheet_names
+
+    for sheet in sheet_names:
+        print(sheet)
+        df = pd.read_excel("/Users/will/Desktop/华住各平台全员名单导出.xlsx", sheet_name=sheet)
+        df.to_excel(writer, sheet_name="总和")
+
+    writer.save()
+
+    ticks2 = time.time()
+    print("总共时间为:", ticks2-ticks)
+
+combile_sheet2()
 #
-paths = os.listdir("/Users/will/Desktop/test1")
+# paths = os.listdir("/Users/will/Desktop/test1")
+# #
+# line = 0
+# #
+# df3 = pd.read_excel("/Users/will/Desktop/城家.xlsx")
 #
-line = 0
+# for fl in paths:
+#     if fl == ".DS_Store":continue
 #
-df3 = pd.read_excel("/Users/will/Desktop/城家.xlsx")
-
-for fl in paths:
-    if fl == ".DS_Store":continue
-
-    path = os.path.join("/Users/will/Desktop/test1", fl)
-    print("开始读取。。。。%s"%path)
-    data = pd.read_excel(path)  # 这个会直接默认读取到这个Excel的第一个表单
-    data2 = data.drop(index=[0], axis=0)
-
-    df3 = pd.concat([df3,data2],ignore_index=False)
-    print("result有多少行呢%s"%len(df3))
-    line = line + len(data)
-    # df2.to_excel("/Users/will/Desktop/归档/test.xlsx")
-
-df3.to_excel("/Users/will/Desktop/test1.xlsx")
-df4 = pd.read_excel("/Users/will/Desktop/test1.xlsx")
-print(df4)
+#     path = os.path.join("/Users/will/Desktop/test1", fl)
+#     print("开始读取。。。。%s"%path)
+#     data = pd.read_excel(path)  # 这个会直接默认读取到这个Excel的第一个表单
+#     data2 = data.drop(index=[0], axis=0)
+#
+#     df3 = pd.concat([df3,data2],ignore_index=False)
+#     print("result有多少行呢%s"%len(df3))
+#     line = line + len(data)
+#     # df2.to_excel("/Users/will/Desktop/归档/test.xlsx")
+#
+# df3.to_excel("/Users/will/Desktop/test1.xlsx")
+# df4 = pd.read_excel("/Users/will/Desktop/test1.xlsx")
+# print(df4)
 #
 # print("总共多少行df%s"%len(df3))
 # print("总共多少行%s"%line)
