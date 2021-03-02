@@ -27,3 +27,30 @@ libcommonCrypto ( 加密库，比如常用的 md5 函数 )
 
 减少可执行文件体积：相比静态链接，动态链接在编译时不需要打进去，所以可执行文件的体积要小很多
 
+援引并翻译
+[!《 Mike Ash 这篇 blog 》](https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html)
+对 dyld 作用顺序的概括：
+
+* 从 kernel 留下的原始调用栈引导和启动自己
+* 将程序依赖的动态链接库递归加载进内存，当然这里有缓存机制
+* non-lazy 符号立即 link 到可执行文件，lazy 的存表里
+* Runs static initializers for the executable
+* 找到可执行文件的 main 函数，准备参数并调用
+* 程序执行中负责绑定 lazy 符号、提供 runtime dynamic loading services、提供调试器接口
+* 程序main函数 return 后执行 static terminator
+* 某些场景下 main 函数结束后调 libSystem 的 _exit 函数
+
+# ImageLoader
+
+ImageLoader 作用是将这些文件加载进内存，且每一个文件对应一个ImageLoader实例来负责加载。
+
+两步走：
+
+* 在程序运行时它先将动态链接的 image 递归加载 （也就是上面测试栈中一串的递归调用的时刻）
+
+* 再从可执行文件 image 递归加载所有符号
+
+# runtime 与 +load
+
+
+
