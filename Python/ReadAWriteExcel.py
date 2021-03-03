@@ -100,35 +100,46 @@ def combile_sheet2():
     ticks2 = time.time()
     print("总共时间为:", ticks2-ticks)
 
-combile_sheet2()
+# combile_sheet2()
 #
-# paths = os.listdir("/Users/will/Desktop/test1")
-# #
-# line = 0
-# #
-# df3 = pd.read_excel("/Users/will/Desktop/城家.xlsx")
-#
-# for fl in paths:
-#     if fl == ".DS_Store":continue
-#
-#     path = os.path.join("/Users/will/Desktop/test1", fl)
-#     print("开始读取。。。。%s"%path)
-#     data = pd.read_excel(path)  # 这个会直接默认读取到这个Excel的第一个表单
-#     data2 = data.drop(index=[0], axis=0)
-#
-#     df3 = pd.concat([df3,data2],ignore_index=False)
-#     print("result有多少行呢%s"%len(df3))
-#     line = line + len(data)
-#     # df2.to_excel("/Users/will/Desktop/归档/test.xlsx")
-#
-# df3.to_excel("/Users/will/Desktop/test1.xlsx")
-# df4 = pd.read_excel("/Users/will/Desktop/test1.xlsx")
-# print(df4)
-#
-# print("总共多少行df%s"%len(df3))
-# print("总共多少行%s"%line)
+
+def combile_excels(aim_path):
+
+    '''
+    组合文件夹下，多个Excel到同一个文件
+
+    :param aim_path:
+    :return:
+    '''
+
+    paths = os.listdir(aim_path)
+    line = 0
+    df3 = pd.DataFrame()
+
+    for fl in paths:
+        if fl == ".DS_Store":continue
+
+        path = os.path.join("/Users/will/Desktop/tests", fl)
+        print("开始读取。。。。%s"%path)
+        data = pd.read_excel(path)  # 这个会直接默认读取到这个Excel的第一个表单
+        data2 = data.drop(index=[0], axis=0)
+
+        df3 = pd.concat([df3,data2],ignore_index=False)
+        print("%s"%fl+"有多少行呢%s"%len(data2))
+        line = line + len(data)
+
+    result_path = "/Users/will/Desktop/result/result.xlsx"
+    df3.to_excel(result_path)
+    df4 = pd.read_excel(result_path)
+    print(df4)
+
+    print("总共多少行df%s"%len(df3))
+    print("总共多少行%s"%line)
+
+aim_path = "/Users/will/Desktop/tests"
+combile_excels(aim_path)
     # return
-#
+#w
 #     if f :
 #         x=getshnum(f)
 #         for shnum in range(x):
