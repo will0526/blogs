@@ -10,3 +10,6 @@ JPype1==0.7.5
 html-testRunner==1.2.1
 redis
 APScheduler==3.5.1
+openpyxl
+itchat
+xlwings
