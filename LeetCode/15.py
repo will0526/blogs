@@ -1,6 +1,6 @@
 # Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
-# 思路：1，先排序。
+# 思路：1，先排序。2，遍历
 from typing import List
 
 class Solution:
