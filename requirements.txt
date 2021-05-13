@@ -2,7 +2,7 @@ fastapi==0.54.1
 ujson==1.35
 uvicorn==0.11.3
 requests==2.22.0
-pydantic==1.5
+pydantic==1.6.2
 pyDes==2.0.1
 python-ldap==3.2.0
 fishbase==1.3
