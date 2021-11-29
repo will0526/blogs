@@ -4,7 +4,7 @@ uvicorn==0.11.3
 requests==2.22.0
 pydantic==1.5
 pyDes==2.0.1
-python-ldap==3.2.0
+python-ldap==3.4.0
 fishbase==1.3
 JPype1==0.7.5
 html-testRunner==1.2.1
